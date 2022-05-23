@@ -1,5 +1,43 @@
-import {GET_ITEMS, ADD_ITEM, DELETE_ITEM, EDIT_ITEM, ITEMS_LOADING} from './types';
+import {GET_ITEMS, GET_COMMENTS, ADD_ITEM, DELETE_ITEM, EDIT_ITEM, ITEMS_LOADING} from './types';
 import axios from 'axios';
+
+export const getComments = () => (dispatch) => {
+    axios.get('http://localhost:5000/api/comments')
+      .then(res =>
+        dispatch({
+          type: GET_COMMENTS,
+          payload: res.data
+        })
+      )
+      .catch(error => {
+        console.log(error)
+        console.log(error.response)
+        console.log(error.response.data)
+        console.log(error.response.data.error)
+     })
+  };
+export const deleteComment = (id) => dispatch => {
+    axios
+        .delete(`http://localhost:5000/api/comments/${id}`)
+        .catch(error => {
+            console.log(error)
+            console.log(error.response)
+            console.log(error.response.data)
+            console.log(error.response.data.error)
+            }
+        );
+};
+
+export const addComment = (comment) => dispatch => {
+    axios
+        .post('http://localhost:5000/api/comments', comment)
+        .catch(error => {
+            console.log(comment)
+            console.log(error.response)
+            console.log(error.response.data)
+            console.log(error.response.data.error)
+         })
+};
 
 export const getItems = () => (dispatch) => {
     dispatch(setItemsLoading());
@@ -25,6 +63,13 @@ export const deleteItem = (id) => dispatch => {
             type: DELETE_ITEM,
             payload: id
         })
+        )
+        .catch(error => {
+            console.log(error)
+            console.log(error.response)
+            console.log(error.response.data)
+            console.log(error.response.data.error)
+         }
     );
 };
 
